@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arts in the Oven - Bite the Sweet Side of Life</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* === Custom Fonts/General Styles === */
+        @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;600;700&display=swap');
+
+        :root {
+            --pink-light: #FFC0CB; /* Light Pink */
+            --pink-medium: #FF69B4; /* Hot Pink/Rose */
+            --pink-dark: #C71585; /* Deep Rose/Berry */
+            --white-creamy: #fdfdfd;
+            --shadow-light: rgba(255, 105, 180, 0.2);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(180deg, var(--white-creamy) 0%, var(--pink-light) 100%);
+            min-height: 100vh;
+        }
+
+        section {
+            padding: 80px 5%;
+            min-height: 80vh;
+        }
+
+        h2 {
+            font-family: 'Pacifico', cursive;
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 2.5em;
+            color: var(--pink-dark);
+            text-shadow: 1px 1px 2px var(--shadow-light);
+        }
+
+        /* === Navigation Bar (Header) === */
+        header {
+            position: sticky;
+            top: 0;
+            background-color: var(--white-creamy);
+            box-shadow: 0 2px 10px var(--shadow-light);
+            z-index: 1000;
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Pacifico', cursive;
+            font-size: 1.8em;
+            color: var(--pink-dark);
+            text-decoration: none;
+        }
+
+        nav a {
+            color: var(--pink-medium);
+            text-decoration: none;
+            font-weight: 600;
+            margin-left: 25px;
+            padding: 8px 15px;
+            border-radius: 20px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        nav a:hover, nav a.active {
+            background-color: var(--pink-light);
+            color: var(--pink-dark);
+        }
+
+        .cart-icon {
+            font-size: 1.4em;
+            color: var(--pink-dark);
+            cursor: pointer;
+            position: relative;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background-color: var(--pink-dark);
+            color: var(--white-creamy);
+            border-radius: 50%;
+            padding: 2px 6px;
+            font-size: 0.7em;
+            font-weight: bold;
+            display: none; /* Hidden by default */
+        }
+
+        /* === Home Section === */
+        #home {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: linear-gradient(135deg, var(--pink-light) 0%, var(--white-creamy) 100%);
+            min-height: 90vh;
+            padding-top: 100px; /* Space for fixed header */
+        }
+
+        .welcome-message {
+            max-width: 800px;
+            padding: 40px;
+            border-radius: 25px;
+            background: rgba(255, 255, 255, 0.8);
+            box-shadow: 0 10px 30px var(--shadow-light);
+        }
+
+        .welcome-message h1 {
+            font-family: 'Pacifico', cursive;
+            font-size: 4em;
+            color: var(--pink-dark);
+            margin-bottom: 10px;
+        }
+
+        .welcome-message p {
+            font-size: 1.5em;
+            font-weight: 300;
+            color: var(--pink-medium);
+            background: linear-gradient(90deg, var(--pink-medium), var(--pink-dark));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* === Products Section === */
+        #products {
+            background-color: var(--white-creamy);
+            text-align: center;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .product-card {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px var(--shadow-light);
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px var(--pink-medium);
+        }
+
+        .product-image {
+            width: 100%;
+            max-width: 250px;
+            height: 300px; /* Tall, portrait style */
+            overflow: hidden;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            border: 3px solid var(--pink-light);
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .product-card:hover .product-image img {
+            transform: scale(1.05);
+        }
+
+        .product-info h3 {
+            color: var(--pink-dark);
+            margin-bottom: 5px;
+            font-size: 1.4em;
+        }
+
+        .product-info p {
+            font-weight: 600;
+            color: var(--pink-medium);
+            margin-bottom: 15px;
+        }
+
+        .variant-selector, .quantity-selector {
+            width: 100%;
+            max-width: 250px;
+            margin-bottom: 15px;
+            padding: 8px;
+            border-radius: 8px;
+            border: 1px solid var(--pink-light);
+            color: var(--pink-dark);
+            font-weight: 500;
+            transition: border-color 0.3s;
+        }
+
+        .variant-selector:focus, .quantity-selector:focus {
+            border-color: var(--pink-medium);
+            outline: none;
+        }
+
+        .add-to-cart-btn {
+            background: linear-gradient(90deg, var(--pink-medium), var(--pink-dark));
+            color: var(--white-creamy);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: opacity 0.3s, transform 0.3s;
+            width: 100%;
+            max-width: 250px;
+        }
+
+        .add-to-cart-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+
+        /* === About Section === */
+        #about {
+            background-color: var(--pink-light);
+            text-align: center;
+        }
+
+        #about p {
+            max-width: 800px;
+            margin: 0 auto;
+            font-size: 1.1em;
+            color: var(--pink-dark);
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 15px;
+            box-shadow: 0 2px 10px var(--shadow-light);
+        }
+
+        /* === Contact Section === */
+        #contact {
+            background-color: var(--white-creamy);
+            text-align: center;
+        }
+
+        .social-icons {
+            margin-top: 30px;
+        }
+
+        .social-icons a {
+            display: inline-block;
+            margin: 0 15px;
+            font-size: 2.5em;
+            color: var(--pink-medium);
+            transition: color 0.3s, transform 0.3s;
+        }
+
+        .social-icons a:hover {
+            color: var(--pink-dark);
+            transform: scale(1.2);
+        }
+
+        /* === Cart Modal/Panel === */
+        .cart-modal {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 350px;
+            height: 100%;
+            background-color: var(--white-creamy);
+            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+            transform: translateX(100%);
+            transition: transform 0.4s ease-in-out;
+            z-index: 2000;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cart-modal.open {
+            transform: translateX(0);
+        }
+
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--pink-light);
+            padding-bottom: 10px;
+        }
+
+        .close-cart {
+            font-size: 1.5em;
+            cursor: pointer;
+            color: var(--pink-dark);
+        }
+
+        .cart-items {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px dashed var(--pink-light);
+        }
+
+        .cart-item-details {
+            flex-grow: 1;
+        }
+
+        .cart-item-details h4 {
+            font-size: 1em;
+            color: var(--pink-dark);
+        }
+
+        .cart-item-details small {
+            color: #777;
+        }
+
+        .cart-item-quantity input {
+            width: 50px;
+            padding: 5px;
+            text-align: center;
+            border: 1px solid var(--pink-light);
+            border-radius: 5px;
+            margin: 0 10px;
+        }
+
+        .cart-item-subtotal {
+            font-weight: 600;
+            color: var(--pink-medium);
+            width: 70px;
+            text-align: right;
+        }
+
+        .remove-item {
+            color: var(--pink-dark);
+            cursor: pointer;
+            margin-left: 10px;
+            transition: color 0.3s;
+        }
+
+        .remove-item:hover {
+            color: #dc3545;
+        }
+
+        .cart-footer {
+            border-top: 2px solid var(--pink-medium);
+            padding-top: 15px;
+            margin-top: 15px;
+        }
+
+        .cart-total {
+            display: flex;
+            justify-content: space-between;
+            font-size: 1.2em;
+            font-weight: bold;
+            color: var(--pink-dark);
+            margin-bottom: 15px;
+        }
+
+        .checkout-btn {
+            background-color: var(--pink-dark);
+            color: var(--white-creamy);
+            border: none;
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .checkout-btn:hover {
+            background-color: var(--pink-medium);
+        }
+
+        /* === Checkout Form Overlay === */
+        .checkout-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            z-index: 3000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .checkout-overlay.open {
+            display: flex;
+        }
+
+        .checkout-form-container {
+            background-color: var(--pink-light);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            width: 90%;
+            max-width: 500px;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .checkout-form-container h3 {
+            color: var(--pink-dark);
+            text-align: center;
+            margin-bottom: 20px;
+            font-family: 'Pacifico', cursive;
+        }
+
+        .checkout-form label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: var(--pink-dark);
+        }
+
+        .checkout-form input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid var(--pink-medium);
+            border-radius: 8px;
+        }
+
+        .checkout-form button {
+            background-color: var(--pink-dark);
+            color: var(--white-creamy);
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .checkout-form button:hover {
+            background-color: var(--pink-medium);
+        }
+
+        .confirmation-message {
+            text-align: center;
+            padding: 40px;
+            background: var(--white-creamy);
+            border-radius: 15px;
+            box-shadow: 0 5px 15px var(--shadow-light);
+            color: var(--pink-dark);
+            font-size: 1.5em;
+            font-weight: 600;
+            display: none;
+        }
+
+        /* === Responsive Adjustments === */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+            }
+
+            nav {
+                margin-top: 10px;
+                text-align: center;
+            }
+
+            nav a {
+                margin: 0 8px;
+                padding: 5px 10px;
+                font-size: 0.9em;
+            }
+
+            .welcome-message h1 {
+                font-size: 3em;
+            }
+
+            .welcome-message p {
+                font-size: 1.2em;
+            }
+
+            .product-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cart-modal {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="#home" class="logo">Arts in the Oven</a>
+        <nav>
+            <a href="#home" class="nav-link">🏠 Home</a>
+            <a href="#products" class="nav-link">🧁 Products</a>
+            <a href="#about" class="nav-link">👩‍🍳 About</a>
+            <a href="#contact" class="nav-link">📞 Contact</a>
+        </nav>
+        <div class="cart-icon" onclick="toggleCart()">
+            <i class="fas fa-shopping-cart"></i>
+            <span class="cart-count" id="cart-count">0</span>
+        </div>
+    </header>
+
+    <section id="home">
+        <div class="welcome-message">
+            <h1>Welcome to Arts in the Oven!</h1>
+            <p>Bite the Sweet Side of Life.</p>
+        </div>
+    </section>
+    
+    ---
+
+    <section id="products">
+        <h2>Our Sweet Creations</h2>
+        <div class="product-grid">
+
+            <div class="product-card" data-product-id="1" data-product-name="Cupcakes">
+                <div class="product-image">
+                    <img src="images.jpg" alt="Cupcakes" onerror="this.onerror=null; this.src='https://via.placeholder.com/250x300/FFC0CB/C71585?text=Cupcakes'">
+                </div>
+                <div class="product-info">
+                    <h3>Cupcakes</h3>
+                    <p>₱90 (2 pcs) | ₱170 (4 pcs)</p>
+                </div>
+                <select class="variant-selector" id="variant-1">
+                    <option value="90|2 pcs">₱90 - 2 pcs</option>
+                    <option value="170|4 pcs">₱170 - 4 pcs</option>
+                </select>
+                <input type="number" class="quantity-selector" id="quantity-1" value="1" min="1">
+                <button class="add-to-cart-btn" onclick="addToCart(1)">Add to Cart</button>
+            </div>
+
+            <div class="product-card" data-product-id="2" data-product-name="Cookies">
+                <div class="product-image">
+                    <img src="WEB1clsoe_up_of_chocolate_chip_cookies._stacked_on_whi_07bc1482-455e-4c1a-969c-b0c7eaad50e1_3-720x720.jpg" alt="Cookies" onerror="this.onerror=null; this.src='https://via.placeholder.com/250x300/FFC0CB/C71585?text=Cookies'">
+                </div>
+                <div class="product-info">
+                    <h3>Cookies</h3>
+                    <p>₱60 (1 pc) | ₱170 (3 pcs)</p>
+                </div>
+                <select class="variant-selector" id="variant-2">
+                    <option value="60|1 pc">₱60 - 1 pc</option>
+                    <option value="170|3 pcs">₱170 - 3 pcs</option>
+                </select>
+                <input type="number" class="quantity-selector" id="quantity-2" value="1" min="1">
+                <button class="add-to-cart-btn" onclick="addToCart(2)">Add to Cart</button>
+            </div>
+
+            <div class="product-card" data-product-id="3" data-product-name="Cheesecake">
+                <div class="product-image">
+                    <img src="cheesecake-1-22.jpg" alt="Cheesecake" onerror="this.onerror=null; this.src='https://via.placeholder.com/250x300/FFC0CB/C71585?text=Cheesecake'">
+                </div>
+                <div class="product-info">
+                    <h3>Cheesecake</h3>
+                    <p>Classic ₱190 | Strawberry ₱210</p>
+                </div>
+                <select class="variant-selector" id="variant-3">
+                    <option value="190|Classic">₱190 - Classic</option>
+                    <option value="210|Strawberry">₱210 - Strawberry</option>
+                </select>
+                <input type="number" class="quantity-selector" id="quantity-3" value="1" min="1">
+                <button class="add-to-cart-btn" onclick="addToCart(3)">Add to Cart</button>
+            </div>
+
+            <div class="product-card" data-product-id="4" data-product-name="Brownies">
+                <div class="product-image">
+                    <img src="582527971_2193555684505703_4921343840051266416_n.jpg" alt="Brownies" onerror="this.onerror=null; this.src='https://via.placeholder.com/250x300/FFC0CB/C71585?text=Brownies'">
+                </div>
+                <div class="product-info">
+                    <h3>Brownies</h3>
+                    <p>₱85 (2 pcs) | ₱160 (4 pcs)</p>
+                </div>
+                <select class="variant-selector" id="variant-4">
+                    <option value="85|2 pcs">₱85 - 2 pcs</option>
+                    <option value="160|4 pcs">₱160 - 4 pcs</option>
+                </select>
+                <input type="number" class="quantity-selector" id="quantity-4" value="1" min="1">
+                <button class="add-to-cart-btn" onclick="addToCart(4)">Add to Cart</button>
+            </div>
+
+        </div>
+    </section>
+
+    ---
+
+    <section id="about">
+        <h2>Our Sweet Story</h2>
+        <p>
+            Arts in the Oven is a small bakery born out of a big passion for **homemade sweets**. We believe that every treat should be a work of art, baked fresh with love. We specialize in classic favorites like **cupcakes, cookies, cheesecakes, and brownies**, using only the finest ingredients. Everything you taste is crafted right here in **Naic, Cavite**, bringing you a little slice of the sweet side of life.
+        </p>
+    </section>
+
+    ---
+
+    <section id="contact">
+        <h2>Connect With Us</h2>
+        <div class="social-icons">
+            <a href="https://www.facebook.com/profile.php?id=61582700034963" target="_blank" title="Facebook">
+                <i class="fab fa-facebook-f"></i>
+            </a>
+            <a href="https://www.instagram.com/arts_intheoven?igsh=Zjhhb3RjbjZ0bnhp" target="_blank" title="Instagram">
+                <i class="fab fa-instagram"></i>
+            </a>
+            <a href="https://www.tiktok.com/@artsintheoven4" target="_blank" title="TikTok">
+                <i class="fab fa-tiktok"></i>
+            </a>
+        </div>
+    </section>
+
+    <div class="cart-modal" id="cart-modal">
+        <div class="cart-header">
+            <h3>Shopping Cart</h3>
+            <i class="fas fa-times close-cart" onclick="toggleCart()"></i>
+        </div>
+        <div class="cart-items" id="cart-items-container">
+            <p id="empty-cart-message" style="text-align: center; color: #999;">Your cart is empty.</p>
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Total:</span>
+                <span id="cart-total-price">₱0</span>
+            </div>
+            <button class="checkout-btn" onclick="openCheckoutForm()" id="proceed-checkout-btn" disabled>Proceed to Checkout</button>
+        </div>
+    </div>
+
+    <div class="checkout-overlay" id="checkout-overlay">
+        <div class="checkout-form-container">
+            <i class="fas fa-times close-cart" style="float: right;" onclick="closeCheckoutForm()"></i>
+            <div id="checkout-main-content">
+                <h3>Delivery Details</h3>
+                <form id="checkout-form">
+                    <label for="fullName">Full Name</label>
+                    <input type="text" id="fullName" name="fullName" required>
+
+                    <label for="phoneNumber">Phone Number</label>
+                    <input type="tel" id="phoneNumber" name="phoneNumber" required>
+
+                    <label for="deliveryAddress">Exact Delivery Address</label>
+                    <input type="text" id="deliveryAddress" name="deliveryAddress" required>
+
+                    <button type="submit">Place Order</button>
+                </form>
+            </div>
+            <div class="confirmation-message" id="confirmation-message">
+                <i class="fas fa-check-circle" style="color: var(--pink-medium); font-size: 2em; margin-bottom: 10px;"></i>
+                <p>Thank you for your order!</p>
+                <p style="font-size: 0.8em; font-weight: 400; color: #777;">Your delicious treats will be prepared soon.</p>
+                <button class="checkout-btn" style="margin-top: 20px;" onclick="closeCheckoutForm(true)">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- DATA STRUCTURE & INITIALIZATION ---
+        let cart = JSON.parse(localStorage.getItem('artsInTheOvenCart')) || [];
+        
+        // Product list for reference (optional, can be inferred from HTML/variants)
+        const products = {
+            1: { name: 'Cupcakes', image: 'images/cupcake.jpg' },
+            2: { name: 'Cookies', image: 'images/cookies.jpg' },
+            3: { name: 'Cheesecake', image: 'images/cheesecake.jpg' },
+            4: { name: 'Brownies', image: 'images/brownies.jpg' },
+        };
+
+        // --- LOCAL STORAGE & CART MANAGEMENT ---
+
+        function saveCart() {
+            localStorage.setItem('artsInTheOvenCart', JSON.stringify(cart));
+            updateCartDisplay();
+        }
+
+        function addToCart(productId) {
+            const variantSelect = document.getElementById(`variant-${productId}`);
+            const quantityInput = document.getElementById(`quantity-${productId}`);
+            
+            const [price, variant] = variantSelect.value.split('|');
+            const quantity = parseInt(quantityInput.value);
+            const priceNum = parseFloat(price);
+
+            if (quantity < 1) {
+                alert("Please select a valid quantity.");
+                return;
+            }
+
+            const productName = products[productId].name;
+            const uniqueKey = `${productId}-${variant}`; // Unique identifier for variant group
+
+            const existingItemIndex = cart.findIndex(item => item.uniqueKey === uniqueKey);
+
+            if (existingItemIndex > -1) {
+                // Update quantity if item/variant exists
+                cart[existingItemIndex].quantity += quantity;
+            } else {
+                // Add new item
+                cart.push({
+                    productId: productId,
+                    name: productName,
+                    variant: variant,
+                    price: priceNum,
+                    quantity: quantity,
+                    uniqueKey: uniqueKey
+                });
+            }
+            
+            saveCart();
+            document.getElementById('cart-modal').classList.add('open');
+            alert(`Added ${quantity} x ${productName} (${variant}) to cart!`);
+        }
+
+        function updateCartItemQuantity(uniqueKey, newQuantity) {
+            const index = cart.findIndex(item => item.uniqueKey === uniqueKey);
+            if (index > -1) {
+                const quantity = parseInt(newQuantity);
+                if (quantity < 1) {
+                    removeItemFromCart(uniqueKey);
+                } else {
+                    cart[index].quantity = quantity;
+                    saveCart();
+                }
+            }
+        }
+
+        function removeItemFromCart(uniqueKey) {
+            cart = cart.filter(item => item.uniqueKey !== uniqueKey);
+            saveCart();
+        }
+
+        function calculateCartTotal() {
+            return cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+        }
+
+        function updateCartDisplay() {
+            const container = document.getElementById('cart-items-container');
+            const totalElement = document.getElementById('cart-total-price');
+            const countElement = document.getElementById('cart-count');
+            const checkoutBtn = document.getElementById('proceed-checkout-btn');
+            
+            container.innerHTML = '';
+            
+            if (cart.length === 0) {
+                container.innerHTML = '<p id="empty-cart-message" style="text-align: center; color: #999;">Your cart is empty.</p>';
+                totalElement.textContent = '₱0';
+                countElement.style.display = 'none';
+                checkoutBtn.disabled = true;
+                return;
+            }
+
+            let totalItems = 0;
+            cart.forEach(item => {
+                totalItems += item.quantity;
+                const subtotal = item.price * item.quantity;
+                
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'cart-item';
+                itemDiv.innerHTML = `
+                    <div class="cart-item-details">
+                        <h4>${item.name}</h4>
+                        <small>₱${item.price} x ${item.variant}</small>
+                    </div>
+                    <div class="cart-item-quantity">
+                        <input type="number" value="${item.quantity}" min="1" 
+                            onchange="updateCartItemQuantity('${item.uniqueKey}', this.value)">
+                    </div>
+                    <div class="cart-item-subtotal">₱${subtotal.toFixed(2)}</div>
+                    <i class="fas fa-trash-alt remove-item" onclick="removeItemFromCart('${item.uniqueKey}')"></i>
+                `;
+                container.appendChild(itemDiv);
+            });
+
+            totalElement.textContent = `₱${calculateCartTotal().toFixed(2)}`;
+            countElement.textContent = totalItems;
+            countElement.style.display = 'block';
+            checkoutBtn.disabled = false;
+        }
+
+
+        // --- UI & MODAL FUNCTIONS ---
+
+        function toggleCart() {
+            document.getElementById('cart-modal').classList.toggle('open');
+        }
+
+        function openCheckoutForm() {
+            document.getElementById('cart-modal').classList.remove('open');
+            document.getElementById('checkout-overlay').classList.add('open');
+            document.getElementById('checkout-main-content').style.display = 'block';
+            document.getElementById('confirmation-message').style.display = 'none';
+        }
+
+        function closeCheckoutForm(clearCart = false) {
+            document.getElementById('checkout-overlay').classList.remove('open');
+            document.getElementById('checkout-form').reset();
+            if (clearCart) {
+                cart = [];
+                saveCart();
+            }
+        }
+
+        // --- CHECKOUT SUBMISSION ---
+
+        document.getElementById('checkout-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // In a real application, you would send this data to a backend.
+            // For this project, we simulate the order placement.
+            
+            const fullName = document.getElementById('fullName').value;
+            const phoneNumber = document.getElementById('phoneNumber').value;
+            const deliveryAddress = document.getElementById('deliveryAddress').value;
+            const total = calculateCartTotal().toFixed(2);
+            
+            // Console log for simulated backend data
+            console.log("--- ORDER PLACED ---");
+            console.log("Customer: " + fullName);
+            console.log("Phone: " + phoneNumber);
+            console.log("Address: " + deliveryAddress);
+            console.log("Order Items:", cart);
+            console.log("Total: ₱" + total);
+            console.log("--------------------");
+
+            // Show confirmation message and hide the form
+            document.getElementById('checkout-main-content').style.display = 'none';
+            document.getElementById('confirmation-message').style.display = 'block';
+        });
+
+        // --- INITIALIZATION ---
+        
+        // Call this on page load to restore cart state
+        updateCartDisplay();
+
+        // --- NAVIGATION ACTIVE STATE (Optional Enhancement) ---
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 70; // Header height offset
+                if (pageYOffset >= sectionTop) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').includes(current)) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+    </script>
+    <section id="contact">
+        </section>
+
+    <footer>
+        <div class="social-icons-footer">
+            <a href="https://www.facebook.com/profile.php?id=61582700034963" target="_blank" title="Facebook">
+                <i class="fab fa-facebook-f"></i>
+            </a>
+            <a href="https://www.instagram.com/arts_intheoven?igsh=Zjhhb3RjbjZ0bnhp" target="_blank" title="Instagram">
+                <i class="fab fa-instagram"></i>
+            </a>
+            <a href="https://www.tiktok.com/@artsintheoven4" target="_blank" title="TikTok">
+                <i class="fab fa-tiktok"></i>
+            </a>
+        </div>
+        <p>&copy; 2025 Arts in the Oven. All Rights Reserved.</p>
+    </footer>
+
+    <div class="cart-modal" id="cart-modal">
+        </div>
+        
+</body>
+</html>
